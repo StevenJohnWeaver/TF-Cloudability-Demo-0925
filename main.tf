@@ -20,10 +20,10 @@ provider "aws" {
 
 resource "aws_instance" "web" {
   ami           = "ami-0de716d6197524dd9" # This is a publicly available Amazon Linux 2 AMI
-  instance_type = "t2.small"
+  instance_type = "t2.large"
   tags = {
     Name = "HelloWorldServer"
-    cost-center = "prod"
+    cost-center = "dev"
   }
 }
 
@@ -94,6 +94,7 @@ resource "aws_lb" "app_lb" {
 
   tags = {
     Environment = "Demo"
+    cost-center = "dev"
   }
 }
 
