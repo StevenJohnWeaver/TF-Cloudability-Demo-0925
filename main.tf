@@ -29,7 +29,6 @@ resource "aws_instance" "web" {
 
 resource "aws_s3_bucket" "app_data" {
   bucket = "hcp-demo-app-data-${random_pet.bucket_suffix.id}"
-  acl    = "private"
   tags = {
     Environment = "Demo"
     Purpose     = "CostEstimation"
@@ -40,7 +39,6 @@ resource "random_pet" "bucket_suffix" {
   length    = 2
   separator = "-"
 }
-
 
 resource "aws_ebs_volume" "web_data" {
   availability_zone = "us-east-1a"
@@ -62,11 +60,12 @@ resource "aws_db_instance" "app_db" {
   engine               = "mysql"
   engine_version       = "8.0"
   instance_class       = "db.t3.micro"
-  name                 = "appdb"
+  db_name              = "appdb"
   username             = "admin"
   password             = "password123"
-  skip_final_snapshot = true
+  skip_final_snapshot  = true
 }
+
 
 # Fetch the default VPC
 data "aws_vpc" "default" {
