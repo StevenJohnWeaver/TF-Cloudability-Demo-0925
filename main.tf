@@ -20,11 +20,23 @@ provider "aws" {
 
 resource "aws_instance" "web" {
   ami           = "ami-0de716d6197524dd9" # This is a publicly available Amazon Linux 2 AMI
-  instance_type = "t2.small"
+  instance_type = "t2.large"
   tags = {
     Name = "HelloWorldServer"
     cost-center = "dev"
   }
+}
+
+resource "aws_s3_bucket" "app_data" {
+  bucket = "hcp-demo-app-data-${random_pet.bucket_suffix.id}"
+  tags = {
+    Environment = "Demo"
+    Purpose     = "CostEstimation"
+  }
+}
+resource "random_pet" "bucket_suffix" {
+  length    = 2
+  separator = "-"
 }
 
 resource "aws_ebs_volume" "web_data" {
