@@ -32,6 +32,7 @@ resource "aws_s3_bucket" "app_data" {
   tags = {
     Environment = "Demo"
     Purpose     = "CostEstimation"
+    cost-center = "prod"
   }
 }
 
@@ -46,6 +47,7 @@ resource "aws_ebs_volume" "web_data" {
   type              = "gp3"
   tags = {
     Name = "WebDataVolume"
+    cost-center = "dev"
   }
 }
 
@@ -64,8 +66,10 @@ resource "aws_db_instance" "app_db" {
   username             = "admin"
   password             = "password123"
   skip_final_snapshot  = true
+  tags = {
+    cost-center = "dev"
+  }
 }
-
 
 # Fetch the default VPC
 data "aws_vpc" "default" {
@@ -91,7 +95,6 @@ resource "aws_lb" "app_lb" {
   load_balancer_type = "application"
   security_groups    = []
   subnets            = local.lb_subnets
-
   tags = {
     Environment = "Demo"
     cost-center = "dev"
@@ -103,15 +106,20 @@ resource "aws_lb_target_group" "app_tg" {
   port     = 80
   protocol = "HTTP"
   vpc_id   = data.aws_vpc.default.id
+  tags = {
+    cost-center = "dev"
+  }
 }
 
 resource "aws_lb_listener" "app_listener" {
   load_balancer_arn = aws_lb.app_lb.arn
   port              = 80
   protocol          = "HTTP"
-
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.app_tg.arn
+  }
+  tags = {
+    cost-center = "dev"
   }
 }
