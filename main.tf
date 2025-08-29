@@ -32,7 +32,6 @@ resource "aws_s3_bucket" "app_data" {
   tags = {
     Environment = "Demo"
     Purpose     = "CostEstimation"
-    cost-center = "prod"
   }
 }
 
