@@ -28,15 +28,11 @@ resource "aws_instance" "web" {
 }
 
 #resource "aws_s3_bucket" "app_data" {
-#  bucket = "hcp-demo-app-data-${random_pet.bucket_suffix.id}"
+#  bucket = "hcp-demo-app-data-030626"
 #  tags = {
 #    Environment = "Demo"
 #    Purpose     = "CostEstimation"
 #  }
-#}
-#resource "random_pet" "bucket_suffix" {
-#  length    = 2
-#  separator = "-"
 #}
 
 resource "aws_ebs_volume" "web_data" {
