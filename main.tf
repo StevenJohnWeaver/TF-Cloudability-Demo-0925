@@ -27,13 +27,13 @@ resource "aws_instance" "web" {
   }
 }
 
-#resource "aws_s3_bucket" "app_data" {
-#  bucket = "hcp-demo-app-data-030626"
-#  tags = {
-#    Environment = "Demo"
-#    Purpose     = "CostEstimation"
-#  }
-#}
+resource "aws_s3_bucket" "app_data" {
+  bucket = "hcp-demo-app-data-030626"
+  tags = {
+    Environment = "Demo"
+    Purpose     = "CostEstimation"
+  }
+}
 
 resource "aws_ebs_volume" "web_data" {
   availability_zone = "us-east-1a"
